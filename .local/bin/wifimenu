@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+pkill rofi
+notify-send "Getting a list of network's" -r 2350
+wifi_list=$(nmcli --fields "SECURITY,SSID" device wifi list | sed 1d | sed 's/  */ /g' | sed -E "s/WPA*.?\S/ /g" | sed "s/^--/ /g" | sed "s/  //g" | sed "/--/d")
+# Gives a list of known connections so we can parse it later
+
+dunstctl close 2350
+chosen_network=$(echo -e "$wifi_list" | uniq -u | rofi -dmenu -i -theme-str '@import "wifi.rasi"' -p "󰤯   :" )
+chosen_id=$(echo "${chosen_network:3}" | xargs)
+
+if [ "$chosen_network" = "" ]; then
+	exit
+else
+	success_message="To The Wi-Fi Network \"$chosen_id\"."
+	saved_connections=$(nmcli -g NAME connection)
+	if [[ $(echo "$saved_connections" | grep -w "$chosen_id") = "$chosen_id" ]]; then
+		nmcli connection up id "$chosen_id" | grep "successfully"
+		notify-send "Connection Established" "$success_message"
+	else
+		notify-send "Password was not found" "Please Connect to $chosen_id via nmtui"
+		waybar_modules 'kitty --config ~/.config/kitty/kitty.nocolor.conf -e nmtui'
+	
+	fi
+fi

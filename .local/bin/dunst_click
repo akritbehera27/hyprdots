@@ -1,0 +1,25 @@
+#! /bin/bash
+
+
+if [ -z "$3" ]; then
+# $1 - the notification
+# $2 - the command to run
+ dunstify "$1" --action="default,Open" | while read -r action; do
+      if [ "$action" = "default" ]; then
+        eval "kitty -e $2" &
+      fi
+    done
+
+else
+    # $1 - the notification
+    # $2 - the notification sub-text
+    # $3 - the command to run in kitty
+    dunstify "$1" "$2" --action="default,Open" | while read -r action; do
+      if [ "$action" = "default" ]; then
+        eval "kitty -e $3" &
+      fi
+    done
+fi
+
+
+

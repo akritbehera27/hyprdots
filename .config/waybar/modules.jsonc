@@ -1,0 +1,53 @@
+{  
+"hyprland/window": {
+    "tooltip":false,
+    "max-length": 35
+},
+"tray": {
+    "spacing": 10
+},
+"clock": {
+    "tooltip":true,
+    "tooltip-format": "{:%d %B %A, %Y}",
+    "format": "{:%H:%M}"
+},
+
+"battery": {
+        "states": {
+            "warning": 20
+        },
+        "format": "{icon}",
+        "format-icons": [ "󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹" ],
+        "format-charging": "󰂄",
+        "format-warning": "󰂃",
+		"tooltip-format": "Battery : {capacity}%\n{timeTo}"
+},
+       
+"network": {
+    "format-wifi": "󰤨",
+    "format-ethernet": "",
+    "format-disabled": "󰤭",
+    "format-disconnected": "󰤭", 
+    "tooltip": true,
+    "tooltip-format": "Connected to {ifname}",
+    "tooltip-format-wifi": "Connected to {essid}\nStrength {signalStrength}%",
+    "on-click": "sleep 0.15 && wifimenu",
+    "on-click-right": "waybar_modules 'kitty --config ~/.config/kitty/kitty.nocolor.conf -e nmtui'"
+},
+
+"pulseaudio": {
+    "format": "",
+    "format-muted": "",
+    "on-click": "pulsemixer --toggle-mute",
+    "tooltip-format": "{volume}% volume",
+    "on-click-right": "waybar_modules 'kitty -e pulsemixer'"
+},
+
+"custom/power": {
+    "format" : "⏻ ",
+    "tooltip":false,
+    "on-click": "sleep 0.15 && powermenu",
+    "on-click-right": "system_status"
+
+}
+}

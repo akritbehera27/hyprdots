@@ -1,0 +1,29 @@
+#!/bin/sh
+
+HYPRLAND_DEVICE="etps/2-elantech-touchpad"
+HYPRLAND_VARIABLE="device[$HYPRLAND_DEVICE]:enabled"
+
+STATUS_FILE="/tmp/touchpad.status"
+
+enable_touchpad() {
+    printf "true" >"$STATUS_FILE"
+  notify-send -u normal "Touchpad Enabled"
+hyprctl keyword $HYPRLAND_VARIABLE "true" -r
+}
+
+disable_touchpad() {
+    printf "false" >"$STATUS_FILE"
+notify-send -u normal "Touchpad Disabled"
+hyprctl keyword $HYPRLAND_VARIABLE "false" -r
+}
+
+if ! [ -f "$STATUS_FILE" ]; then
+  touch $STATUS_FILE
+  disable_touchpad
+else
+  if [ $(cat "$STATUS_FILE") = "true" ]; then
+    disable_touchpad
+  elif [ $(cat "$STATUS_FILE") = "false" ]; then
+    enable_touchpad
+  fi
+fi

@@ -1,0 +1,73 @@
+======== Base Desktop ==========
+
+os : arch linux
+Display server : wayland
+Compositro : Hyprland
+Wallpaper : hyprpaper
+Idealing deamon : hypridle
+lock : hyprlock
+Top bar : waybar ( add your user to input group )
+          use --> usermod -aG groupname username
+menues : rofi
+notification : dunst
+
+
+============ Services ===========
+
+wifi: networkmanager & wap_suplicats
+Screen shot: slurp & grim
+brightness: brillo
+volume: pulsemixer & pulseaudo
+battery: acpi
+repeated action (Crons) : cronie ( and edit cron tab to check the batter at an given interval)
+
+
+============ Utility Apps ============
+
+Sehll: zsh ( need to download plugins and powerlevel10k )
+editor: nvim ( might need to download Vim plug installer)
+terminal : kitty
+filemanager : lf ( install package named 'file')
+clipboard : wl-clipboard
+Colour scheme of kitty - Cappuchine mocha
+browser : firefox
+Code editor : vscodium
+Note taking : obsidian
+
+
+========= Media Apps ===========
+image : imv
+vidoe / audio : mpv
+pdf : firefox
+other : nvim
+
+============ Fonts =============
+
+these fonts listed below should be installed on your system :
+
+adobe-source-code-pro-fonts
+cantarell-fonts
+fontconfig
+gnu-free-fonts
+libfontenc
+libxfont2
+terminus-font
+ttf-nerd-fonts-symbols
+ttf-nerd-fonts-symbols-common
+xorg-fonts-encodings
+
+--------------------------
+
+You only need to manually install these fonts : ttf-nerd-fonts-symbols
+Terminus font ( For console )
+
+---------------------------
+
+Font usage : 
+
+hyptlock - cantarell bold
+waybar - cantarell & symbol font
+rofi - cantarell , size 13
+dunst - cantarell , size 13
+kitty - Source code VF
+

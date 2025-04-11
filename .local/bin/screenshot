@@ -1,0 +1,45 @@
+#! /bin/bash
+
+export GRIM_DEFAULT_DIR="$HOME/Pictures/Screenshots/"
+format=$(date +"%Y-%m-%d %T")
+
+
+winscr(){
+GRIM_DEFAULT_DIR="$HOME/Pictures/Screenshots/"
+format=$(date +"%Y-%m-%d %T")
+window_info=$(hyprctl activewindow)
+#Extract the "at" (origin) and "size" (width x height) values
+origin=$(echo "$window_info" | grep "at:" | awk '{print $2}')
+size=$(echo "$window_info" | grep "size:" | awk '{print $2}')
+app=$(hyprctl activewindow | sed -n '10p' | awk '{print $2}')
+
+# Replace the comma in size with "x" for WidthxHeight format
+formatted_size=$(echo "$size" | tr ',' 'x')
+
+var="$origin $formatted_size"
+if [ ${#var} -eq 1 ]; then
+    notify-send "No Active Windows."
+    exit 1
+else
+    echo "$origin $formatted_size" | grim -t png -g - "$GRIM_DEFAULT_DIR$format.png"
+    notify-send "Window : $app"
+fi
+}
+
+pkill rofi
+chosen=$(printf "󰹑 \n󰆟 \n " | rofi -dmenu -i -theme-str '@import "screenshot.rasi"' -p "󰹑 ")
+pkill rofi
+sleep 0.10
+case "$chosen" in
+	"󰹑 ") grim -t png "$GRIM_DEFAULT_DIR$format.png";;
+	"󰆟 ") slurp | grim -t png -g - "$GRIM_DEFAULT_DIR$format.png";;
+  " " ) winscr;;
+	*) exit 1 ;;
+esac
+
+format="${format// /\\ }"
+filepath="$GRIM_DEFAULT_DIR$format.png"
+dunst_click "Screenshot taken" "lf $filepath"
+exit
+
+

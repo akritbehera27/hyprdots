@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Check if a command is provided as an argument
+if [ -z "$1" ]; then
+    echo "Usage: $0 <command>"
+    exit 1
+fi
+
+CURRENT_WORKSPACE=$(hyprctl activeworkspace -j | jq -r '.id')
+
+TARGET_WORKSPACE=10
+hyprctl dispatch workspace "$TARGET_WORKSPACE"
+eval $1
+sleep 0.30
+hyprctl dispatch workspace "$CURRENT_WORKSPACE"
+

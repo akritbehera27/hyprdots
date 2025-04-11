@@ -1,0 +1,15 @@
+#!/bin/sh
+
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias la="ls -a"
+alias ll="ls -al"
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+alias code='vscodium'
+alias dw="cd /home/$USER/Downloads"
+alias do="cd /home/$USER/Documents"
+alias vd="cd /home/$USER/Videos"
+alias pi="cd /home/$USER/Pictures"
+alias rd="cd /home/$USER/repos"
+alias imv="imv -w $(pwd)"

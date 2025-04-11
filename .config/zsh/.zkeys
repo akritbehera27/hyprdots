@@ -1,0 +1,58 @@
+#!/bin/sh
+
+# use vim keys in tab complete menu
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+
+bindkey '^]' history-substring-search-up
+bindkey '^[' history-substring-search-down
+bindkey '^k' kill-line
+bindkey '^[[F' end-of-line
+bindkey '^[[H' beginning-of-line
+
+bindkey '^[[3~' delete-char
+
+delete_current_word() {
+  zle backward-word
+  zle kill-word
+}
+
+zle -N delete_current_word
+bindkey '^[w' delete_current_word
+
+# Define movement functions
+move_cursor_left() { zle backward-char; }
+move_cursor_down() { zle down-line-or-history; }
+move_cursor_up() { zle up-line-or-history; }
+move_cursor_right() { zle forward-char; }
+
+# Register functions as ZLE widgets
+zle -N move_cursor_left
+zle -N move_cursor_down
+zle -N move_cursor_up
+zle -N move_cursor_right
+
+# Bind Ctrl + h/j/k/l to cursor movement
+bindkey '^[h' move_cursor_left   
+bindkey '^[j' move_cursor_down   
+bindkey '^[k' move_cursor_up     
+bindkey '^[l' move_cursor_right 
+bindkey '^[a' beginning-of-line
+bindkey '^[e' end-of-line
+
+jump_to_next_word() {
+  zle forward-word  
+}
+
+jump_to_prev_word() {
+  zle backward-word 
+}
+
+zle -N jump_to_next_word
+zle -N jump_to_prev_word
+
+bindkey '^[]' jump_to_next_word   
+bindkey '^[[' jump_to_prev_word   

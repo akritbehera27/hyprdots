@@ -1,0 +1,23 @@
+[binds]
+<Shift+D> = exec rm "$imv_current_file"; close
+
+gg = goto 1
+<Shift+G> = goto -1
+
+# Zooming
+<Up> = zoom 1
+<Shift+plus> = zoom 1
+i = zoom 1
+<Down> = zoom -1
+<minus> = zoom -1
+o = zoom -1
+
+# Rotate Clockwise by 90 degrees
+<Ctrl+r> = rotate by 90
+<Ctrl+f> = rotate by 180
+<p> = prev
+<n> = next
+
+<Escape> = quit
+<Ctrl+i> = exec notify-send -t 12000 "[ $imv_current_index/$imv_file_count ]" "Path : $imv_current_file"
+<comma> = exec notify-send -t 12000 "[ $imv_current_index/$imv_file_count ]" "Path : $imv_current_file"

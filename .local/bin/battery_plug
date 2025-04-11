@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Send a notification when the laptop is plugged in/unplugged
+# Add the following to /etc/udev/rules.d/99-power-notify.rules
+
+# Replace USERNAME With your username and DBUS_ID with the number obtained by running "id -u"
+
+# Configure for Wayland for Xorg add :  ENV{XAUTHORITY}="/home/USERNAME/.Xauthority"
+#ACTION=="change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="0", ENV{DBUS_SESSION_BUS_ADDRESS}="unix:path=/run/user/DBUS_ID/bus", RUN+="/usr/bin/su USERNAME -c '/home/USERNAME/.local/bin/battery_plug discharging'"
+#ACTION=="change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_ONLINE}=="1", ENV{DBUS_SESSION_BUS_ADDRESS}="unix:path=/run/user/DUSB_ID/bus", RUN+="/usr/bin/su USERNAME -c '/home/USERNAME/.local/bin/battery_plug charging'"
+
+# Reload the config with : sudo udevadm control --reload-rules
+
+
+export DISPLAY=:0
+BATTERY_STATE=$1
+
+IFS=$'\n'   
+for line in $(acpi); do
+    if grep -q "information unavailable" <<< "$line"; then
+      $ThisIsUseless
+    else
+      battery_info=$line
+    fi
+done
+
+BATTERY_LEVEL=$(echo "$battery_info" | awk '{print $4}' | tr -d ',' | tr -d '%')
+
+
+#BATTERY_LEVEL=$(acpi -b | grep "Battery 1" | grep -P -o '[0-9]+(?=%)')
+case "$BATTERY_STATE" in
+	"charging") BATTERY_CHARGING="Charging" ;;
+	"discharging") BATTERY_CHARGING="Discharging" ;;
+esac
+
+# Send notification
+notify-send "${BATTERY_CHARGING}" "${BATTERY_LEVEL}% of battery charged." -r 9991

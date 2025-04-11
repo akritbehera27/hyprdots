@@ -1,0 +1,24 @@
+configuration {
+  font: "Cantarell Bold 15";
+  show-icons: true;
+  sidebar-mode: false;
+  disable-history: true;
+}
+
+element{
+  padding: 5 5;
+}
+
+window {
+  width: 90px;
+  x-offset: -610;
+  y-offset: -290;
+}
+mainbox {
+  children: [listview];
+}
+
+listview {
+  lines: 3;
+  columns: 1;
+}

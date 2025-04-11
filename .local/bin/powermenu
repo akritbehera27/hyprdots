@@ -1,0 +1,13 @@
+#! /bin/sh
+pkill rofi
+chosen=$(printf "   Power Off\n   Restart\n   Lock\n   Suspend" | rofi pgrep -f "rofi.*-title PowerMenue" -dmenu -i -theme-str '@import "power.rasi"' -p "󰤆")
+
+case "$chosen" in
+	"   Power Off") poweroff ;;
+	"   Restart") reboot ;;
+  "   Lock" ) hyprlock;;
+	"   Suspend" ) systemctl suspend;;
+  *) exit 1 ;;
+esac
+exit
+

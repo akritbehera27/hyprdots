@@ -1,0 +1,17 @@
+
+configuration {
+  font: "Cantarell 13";
+}
+
+window {
+  width: 18%;
+  x-offset: 545;
+  y-offset: -270;
+}
+mainbox {
+  children: [listview];
+}
+
+listview {
+	lines: 4;
+}

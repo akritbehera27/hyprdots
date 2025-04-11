@@ -1,0 +1,6 @@
+#!/bin/sh
+text=$(brillo)
+IFS='.'
+read -ra brii <<< "$text"
+
+notify-send -t 2000 " Brightness   :    $(brillo) " -r 103 -h int:value:${brii[0]} 
